@@ -17,10 +17,13 @@ class Search extends Component {
 
             BooksAPI.search(keyword).then(res => {
                 if (res != null && res.error == null) {
+                    res = res.filter(book => {
+                        if (book.imageLinks == null) { //checking whether the book has a thumbnail or not
+                            book.imageLinks = { thumbnail: 'https://cdn1.iconfinder.com/data/icons/matticons-sembilan-solid/64/matticons_solid_No_image_no_photo-128.png' }
+                        }
+                        return book; 
+                    })
                     this.setState({ searchResults: res })
-                } else {
-                    console.log(res);
-
                 }
             })
         } else {
@@ -44,8 +47,7 @@ class Search extends Component {
 
         })
     }
-
-
+ 
     render() {
         return (
             <div className="search-books">
@@ -68,13 +70,10 @@ class Search extends Component {
                         {
                             this.state.searchResults.length !== 0 ? (
                                 this.state.searchResults.map(book => {
-                                    //console.log(book);
+                                   // console.log(book);
                                     return (
-
                                         <li key={book.id} >
-
                                             <Book key={book.id} id={book.id} image={book.imageLinks.thumbnail} authors={book.authors} title={book.title} updateShelfs={this.updateFunc} />
-
                                         </li>
                                     )
                                 })) : ('No Results !!')
