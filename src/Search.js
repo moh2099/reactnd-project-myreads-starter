@@ -16,14 +16,17 @@ class Search extends Component {
         if (keyword !== '') {
 
             BooksAPI.search(keyword).then(res => {
+                //console.log(res)
                 if (res != null && res.error == null) {
                     res = res.filter(book => {
                         if (book.imageLinks == null) { //checking whether the book has a thumbnail or not
                             book.imageLinks = { thumbnail: 'https://cdn1.iconfinder.com/data/icons/matticons-sembilan-solid/64/matticons_solid_No_image_no_photo-128.png' }
                         }
-                        return book; 
+                        return book;
                     })
                     this.setState({ searchResults: res })
+                } else if (res != null && res.error == 'empty query') { 
+                    this.setState({ searchResults: [] })
                 }
             })
         } else {
@@ -70,10 +73,13 @@ class Search extends Component {
                         {
                             this.state.searchResults.length !== 0 ? (
                                 this.state.searchResults.map(book => {
-                                   // console.log(book);
+                                    let myReadBooks = this.props.location.state.books
+                                    let MyReadBook = myReadBooks.find(myBook => myBook.id == book.id)
+                                    let bookShelf = MyReadBook != null ? MyReadBook.shelf : 'None'
+                                    //console.log(book.id + ", " + book.title);
                                     return (
                                         <li key={book.id} >
-                                            <Book key={book.id} id={book.id} image={book.imageLinks.thumbnail} authors={book.authors} title={book.title} updateShelfs={this.updateFunc} />
+                                            <Book key={book.id} bookShelf={bookShelf} id={book.id} image={book.imageLinks.thumbnail} authors={book.authors} title={book.title} updateShelfs={this.updateFunc} />
                                         </li>
                                     )
                                 })) : ('No Results !!')

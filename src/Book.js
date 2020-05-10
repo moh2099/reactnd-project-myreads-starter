@@ -7,7 +7,8 @@ class Book extends Component {
         id: this.props.id,
         bookImage: this.props.image,
         bookAuthors: this.props.authors,
-        bookTitle: this.props.title
+        bookTitle: this.props.title,
+        bookShelf: this.props.bookShelf
     }
 
     handleMoveBook(book_id, shelf) {
@@ -21,7 +22,7 @@ class Book extends Component {
                 <div className="book-top">
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url(' + this.state.bookImage + ')' }}></div>
                     <div className="book-shelf-changer">
-                        <select>
+                         <select value={this.state.bookShelf != 'None' ? this.state.bookShelf : 'none'} onChange={(e) => this.setState({bookShelf: e.target.value})}>
                             <option value="move" disabled>Move to...</option>
                             <option value="currentlyReading" onClick={() => this.handleMoveBook(this.state.id, 'currentlyReading')}>Currently Reading</option>
                             <option value="wantToRead" onClick={() => this.handleMoveBook(this.state.id, 'wantToRead')}>Want to Read</option>

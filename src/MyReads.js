@@ -69,7 +69,7 @@ class MyReads extends Component {
                             //console.log(book);
                             return (
                               book.shelf === 'currentlyReading' ?
-                                (<Book updateShelfs={this.updateFunc} key={book.id} id={book.id} image={book.imageLinks.thumbnail} authors={book.authors} title={book.title} />) : ('')
+                                (<Book updateShelfs={this.updateFunc} bookShelf={book.shelf} key={book.id} id={book.id} image={book.imageLinks.thumbnail} authors={book.authors} title={book.title} />) : ('')
                             )
                           })
                         }
@@ -87,7 +87,7 @@ class MyReads extends Component {
                             //console.log(book);
                             return (
                               book.shelf === 'wantToRead' ?
-                                (<Book updateShelfs={this.updateFunc} key={book.id} id={book.id} image={book.imageLinks.thumbnail} authors={book.authors} title={book.title} />) : ('')
+                                (<Book updateShelfs={this.updateFunc} bookShelf={book.shelf} key={book.id} id={book.id} image={book.imageLinks.thumbnail} authors={book.authors} title={book.title} />) : ('')
                             )
                           })
                         }
@@ -106,7 +106,7 @@ class MyReads extends Component {
                             //console.log(book);
                             return (
                               book.shelf === 'read' ?
-                                (<Book updateShelfs={this.updateFunc} key={book.id} id={book.id} image={book.imageLinks.thumbnail} authors={book.authors} title={book.title} />) : ('')
+                                (<Book updateShelfs={this.updateFunc} bookShelf={book.shelf} key={book.id} id={book.id} image={book.imageLinks.thumbnail} authors={book.authors} title={book.title} />) : ('')
                             )
                           })
                         }
@@ -117,7 +117,9 @@ class MyReads extends Component {
                 </div>
               </div>
                   <div className="open-search">
-               <Link to='/search'> <button onClick={() => this.setState({ showSearchPage: true })}></button></Link>
+              <Link to={{ pathname: '/search', state: this.state }}> {/*  to={{ pathname: '/search', state: this.state }}  this is used to pass the state from the routed component, and you can access it through this.props.location.state */}
+                <button onClick={() => this.setState({ showSearchPage: true })}></button>
+              </Link>
               </div>
             </div>
 
