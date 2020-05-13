@@ -13,7 +13,9 @@ class Book extends Component {
 
     handleMoveBook(book_id, shelf) {
         //console.log(book_id + " " + shelf);
-        BooksAPI.update({id : book_id}, shelf).then(res => this.props.updateShelfs(res))
+        BooksAPI.update({ id: book_id }, shelf).then(res => this.props.updateShelfs(res))
+        this.setState({bookShelf: shelf})
+        
     }
 
     render() {
@@ -22,11 +24,11 @@ class Book extends Component {
                 <div className="book-top">
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url(' + this.state.bookImage + ')' }}></div>
                     <div className="book-shelf-changer">
-                         <select value={this.state.bookShelf != 'None' ? this.state.bookShelf : 'none'} onChange={(e) => this.setState({bookShelf: e.target.value})}>
+                         <select value={this.state.bookShelf != 'None' ? this.state.bookShelf : 'none'} onChange={(e) => this.handleMoveBook(this.state.id, e.target.value)}>
                             <option value="move" disabled>Move to...</option>
-                            <option value="currentlyReading" onClick={() => this.handleMoveBook(this.state.id, 'currentlyReading')}>Currently Reading</option>
-                            <option value="wantToRead" onClick={() => this.handleMoveBook(this.state.id, 'wantToRead')}>Want to Read</option>
-                            <option value="read" onClick={() => this.handleMoveBook(this.state.id, 'read')}>Read</option>
+                            <option value="currentlyReading">Currently Reading</option>
+                            <option value="wantToRead">Want to Read</option>
+                            <option value="read">Read</option>
                             <option value="none">None</option>
                         </select>
                     </div>
