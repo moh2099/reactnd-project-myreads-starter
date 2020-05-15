@@ -47,7 +47,7 @@ class MyReads extends Component {
         })
     
         //this.setState(this.state)
-        this.forceUpdate() 
+        this.forceUpdate() //this re-render the component, it will call render() method, so it is better solution than this.setState(this.state) 
     }
     
     render() { 
