@@ -46,8 +46,8 @@ class MyReads extends Component {
           }
         })
     
-        this.setState(this.state)
-         
+        //this.setState(this.state)
+        this.forceUpdate() 
     }
     
     render() { 
